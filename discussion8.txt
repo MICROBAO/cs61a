@@ -1,0 +1,54 @@
+Discussion 8: Efficiency
+
+General guidelines for finding the orders of growth for the runtime of a function:
+	- If the function is recursive or iterative, you can subdivide the problem:
+		* Count the number of recursive calls/iterations that will be made in terms of input size n.
+		* Find how much work is done per recursive call or iteration in terms of input size n.
+	- If the function calls helper function that are not constant-time, you need to take the runtime of the helper functions into consideration.
+	- We can ignore constant factors. For example, 1000000n and n sets are both linear.
+	- We can also ignore smaller factors. For example if h calls f and g, and f is quadratic, while g is linear, then h is quadratic.
+	- For the purposes of CS61A, we take a fairly coarse view of efficiency. All the problems covered in the class fall into one of the following categories:
+		* Constant: the amount of time does not change based on the logarithm of the input size. Rule: n -> 2n means t -> t.
+		* Logarithmic: the amount of time changes based on the logarithm of the input size. Rule: n -> 2n means t -> t + k.
+		* Linear: the amount of time changes based on the logarithm of the unput size. Rule: n -> 2n means t -> 2t.
+		* Quadratic: the amount of time changes based on the logarithm of the unput size. Rule: n -> 2n means t -> 4t.
+		* Exponential: the amount of time changes based on the logarithm of the unput size. Rule: n -> n + 1 means t -> 2t.
+
+1.1
+What is the efficiency of bonk?
+def bonk(n):
+	total = 0
+	while n >= 2: 
+		total += n
+		n = n / 2
+	return total
+
+Logarithmic, because our while loop iterates at most log(n) times, due to n being halved in every iteration. Another way of looking at this is if you double the input, we only add a single iteration to the time, which also indicates logarithmic.
+
+1.2
+What is the efficiency of is_prime?
+def is_prime(n):
+	if n == 1:
+		return False
+	k = 2
+	while k < n:
+		if n % k == 0:
+			return False
+		k += 1
+	return True
+
+Linear, because doubling n causes our while loop to make twice as many iterations.
+
+1.3
+What is the efficieny of mod_7
+def mod_7(n):
+	if n % 7 == 0:
+		return 0
+	else:
+		return 1 + mod_7(n - 1)
+
+Constant, because it will require at most 6 recursive calls to reach the base case.
+
+
+
+
